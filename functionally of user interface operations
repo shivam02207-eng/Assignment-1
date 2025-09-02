@@ -1,0 +1,135 @@
+public class Account {
+    private String accountNumber;
+    private String accountHolderName;
+    private double balance;
+
+    public Account(String accountNumber, String accountHolderName, double initialBalance) {
+        this.accountNumber = accountNumber;
+        this.accountHolderName = accountHolderName;
+        this.balance = Math.max(initialBalance, 0);
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited: $" + amount);
+        } else {
+            System.out.println("Amount must be positive.");
+        }
+    }
+
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            System.out.println("Withdrawn: $" + amount);
+        } else {
+            System.out.println("Invalid withdrawal amount or insufficient funds.");
+        }
+    }
+
+    public void displayAccountDetails() {
+        System.out.println("=== Account Details ===");
+        System.out.println("Account Number: " + accountNumber);
+        System.out.println("Holder Name   : " + accountHolderName);
+        System.out.println("Balance       : $" + balance);
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+}
+import java.util.Scanner;
+
+public class BankingApp {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Account account = null;
+
+        while (true) {
+            System.out.println("\n==== Banking Application ====");
+            System.out.println("1. Create Account");
+            System.out.println("2. Deposit Money");
+            System.out.println("3. Withdraw Money");
+            System.out.println("4. View Account Details");
+            System.out.println("5. Exit");
+            System.out.print("Select option: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();  // consume newline
+
+            switch (choice) {
+                case 1:
+                    if (account == null) {
+                        System.out.print("Enter Account Number: ");
+                        String accNum = scanner.nextLine();
+
+                        System.out.print("Enter Account Holder Name: ");
+                        String accName = scanner.nextLine();
+
+                        System.out.print("Enter Initial Balance: ");
+                        double initBalance = scanner.nextDouble();
+                        scanner.nextLine(); // consume newline
+
+                        account = new Account(accNum, accName, initBalance);
+                        System.out.println("Account created successfully!");
+                    } else {
+                        System.out.println("Account already exists.");
+                    }
+                    break;
+
+                case 2:
+                    if (account != null) {
+                        System.out.print("Enter deposit amount: ");
+                        double depositAmount = scanner.nextDouble();
+                        scanner.nextLine();
+                        account.deposit(depositAmount);
+                    } else {
+                        System.out.println("No account found. Please create an account first.");
+                    }
+                    break;
+
+                case 3:
+                    if (account != null) {
+                        System.out.print("Enter withdrawal amount: ");
+                        double withdrawAmount = scanner.nextDouble();
+                        scanner.nextLine();
+                        account.withdraw(withdrawAmount);
+                    } else {
+                        System.out.println("No account found. Please create an account first.");
+                    }
+                    break;
+
+                case 4:
+                    if (account != null) {
+                        account.displayAccountDetails();
+                    } else {
+                        System.out.println("No account found. Please create an account first.");
+                    }
+                    break;
+
+                case 5:
+                    System.out.println("Thank you for using the Banking Application!");
+                    scanner.close();
+                    System.exit(0);
+
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+}
+==== Banking Application ====
+1. Create Account
+2. Deposit Money
+3. Withdraw Money
+4. View Account Details
+5. Exit
+Select option: 1
+Enter Account Number: 1345
+Enter Account Holder Name: shiv
+Enter Initial Balance: 177
+Account created successfully!
