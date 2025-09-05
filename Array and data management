@@ -1,0 +1,84 @@
+import java.util.Scanner;
+
+class BankAccount {
+    private String accountNumber;
+    private String accountHolderName;
+    private double balance;
+
+    // Constructor
+    public BankAccount(String accNumber, String holderName, double initialBalance) {
+        this.accountNumber = accNumber;
+        this.accountHolderName = holderName;
+        this.balance = initialBalance;
+    }
+
+    // Methods
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited: $" + amount);
+        } else {
+            System.out.println("Invalid amount. Deposit failed.");
+        }
+    }
+
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            System.out.println("Withdrawn: $" + amount);
+        } else {
+            System.out.println("Invalid or insufficient balance. Withdrawal failed.");
+        }
+    }
+
+    public void displayInfo() {
+        System.out.println("Account Number: " + accountNumber);
+        System.out.println("Account Holder: " + accountHolderName);
+        System.out.println("Balance: $" + balance);
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+}
+
+public class BankingApp {
+    static BankAccount[] accounts = new BankAccount[100]; // Max 100 accounts
+    static int accountCount = 0;
+    static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        int choice;
+
+        do {
+            System.out.println("\n--- Banking Application ---");
+            System.out.println("1. Create Account");
+            System.out.println("2. Deposit");
+            System.out.println("3. Withdraw");
+            System.out.println("4. Display Account Info");
+            System.out.println("5. Exit");
+            System.out.print("Enter choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1 -> createAccount();
+                case 2 -> deposit();
+                case 3 -> withdraw();
+                case 4 -> displayAccount();
+                case 5 -> System.out.println("Exiting application.");
+                default -> System.out.println("Invalid choice.");
+            }
+        } while (choice != 5);
+    }
+
+    // Create a new account
+    public static void createAccount() {
+        if (accountCount >= accounts.length) {
+            System.out.println("Account limit reached. Cannot create more accounts.");
+            return;
+        }
+
+        System.out.print("Enter Account Number: ");
+        String accNumber = scanner.nextLine();
+        System.out.print("Enter A
