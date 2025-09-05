@@ -1,0 +1,60 @@
+import java.util.Scanner;
+
+class BankAccount {
+    private String accountNumber;
+    private String accountHolderName;
+    private double balance;
+
+    public BankAccount(String accNumber, String holderName, double initialBalance) {
+        this.accountNumber = accNumber;
+        this.accountHolderName = holderName;
+        this.balance = initialBalance;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void deposit(double amount) {
+        if (amount <= 0) {
+            System.out.println("❌ Deposit must be positive.");
+            return;
+        }
+        balance += amount;
+        System.out.println("✅ Deposit successful. New balance: $" + balance);
+    }
+
+    public void withdraw(double amount) {
+        if (amount <= 0) {
+            System.out.println("❌ Withdrawal must be positive.");
+        } else if (amount > balance) {
+            System.out.println("❌ Insufficient funds.");
+        } else {
+            balance -= amount;
+            System.out.println("✅ Withdrawal successful. New balance: $" + balance);
+        }
+    }
+
+    public void displayInfo() {
+        System.out.println("📄 Account Details:");
+        System.out.println("Account Number : " + accountNumber);
+        System.out.println("Holder Name    : " + accountHolderName);
+        System.out.println("Balance        : $" + balance);
+    }
+}
+
+public class BankingAppValidation {
+    static BankAccount[] accounts = new BankAccount[100];
+    static int accountCount = 0;
+    static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        int choice;
+        do {
+            System.out.println("\n🏦 Banking Application");
+            System.out.println("1. Create Account");
+            System.out.println("2. Deposit");
+            System.out.println("3. Withdraw");
+            System.out.println("4. View Account");
+            System.out.println("5. Exit");
+            System.out.print("Select option: ");
